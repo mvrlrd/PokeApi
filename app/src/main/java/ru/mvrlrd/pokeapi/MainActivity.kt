@@ -16,7 +16,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
-    val apiService = DaggerDaggerComponent.create().retrofitClient().getApiService()
+    private val apiService = DaggerDaggerComponent.create().retrofitClient().getApiService()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,10 +25,10 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val button = binding.button
-        button.setOnClickListener {
-            getPokemon("32")
+        binding.searchActionButton.setOnClickListener {
+            getPokemon(binding.queryText.text.toString())
         }
+
 
         val navView: BottomNavigationView = binding.navView
 
