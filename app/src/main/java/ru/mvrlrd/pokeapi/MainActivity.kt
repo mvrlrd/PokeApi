@@ -1,5 +1,6 @@
 package ru.mvrlrd.pokeapi
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
@@ -7,17 +8,27 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import ru.mvrlrd.pokeapi.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
+    val apiService = DaggerDaggerComponent.create().retrofitClient().getApiService()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val button = binding.button
+        button.setOnClickListener {
+            getPokemon("32")
+        }
 
         val navView: BottomNavigationView = binding.navView
 
@@ -32,4 +43,18 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
     }
+
+    @SuppressLint("CheckResult")
+    private fun getPokemon(id: String) {
+        apiService.search(id)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                { value -> println("Received: $value") }, // onNext
+                { error -> println("Error: $error") },    // onError
+                { println("Completed!") }
+            )
+    }
 }
+
+
