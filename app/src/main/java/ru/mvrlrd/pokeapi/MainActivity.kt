@@ -16,7 +16,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
-    private val apiService = DaggerDaggerComponent.create().retrofitClient().getApiService()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,9 +25,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.searchActionButton.setOnClickListener {
-            getPokemon(binding.queryText.text.toString())
-        }
+
 
 
         val navView: BottomNavigationView = binding.navView
@@ -37,24 +35,14 @@ class MainActivity : AppCompatActivity() {
         // menu should be considered as top level destinations.
         val appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications
+                R.id.navigation_home, R.id.navigation_dashboard
             )
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
     }
 
-    @SuppressLint("CheckResult")
-    private fun getPokemon(id: String) {
-        apiService.search(id)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                { value -> println("Received: $value") }, // onNext
-                { error -> println("Error: $error") },    // onError
-                { println("Completed!") }
-            )
-    }
+
 }
 
 

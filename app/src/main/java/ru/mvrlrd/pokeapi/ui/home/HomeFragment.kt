@@ -8,10 +8,10 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import ru.mvrlrd.pokeapi.R
 import ru.mvrlrd.pokeapi.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {
+
 
     private lateinit var homeViewModel: HomeViewModel
     private var _binding: FragmentHomeBinding? = null
@@ -31,10 +31,15 @@ class HomeFragment : Fragment() {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textHome
-        homeViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
+        binding.searchActionButton.setOnClickListener {
+            homeViewModel.getPokemon(binding.queryText.text.toString())
+        }
+
+        val pokemonName: TextView = binding.textHome
+        homeViewModel.pokemonName.observe(viewLifecycleOwner, Observer {
+            pokemonName.text = it
         })
+
         return root
     }
 
@@ -42,4 +47,6 @@ class HomeFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
+
 }
