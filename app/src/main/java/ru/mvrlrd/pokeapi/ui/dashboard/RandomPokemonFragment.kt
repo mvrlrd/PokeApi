@@ -1,5 +1,6 @@
 package ru.mvrlrd.pokeapi.ui.dashboard
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -20,6 +21,7 @@ class RandomPokemonFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
 
+    @SuppressLint("SetTextI18n")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -40,7 +42,7 @@ class RandomPokemonFragment : Fragment() {
             binding.randomNameText.text = it.name
             binding.heightText.text = "рост: ${it.height}"
             binding.weightText.text = "вес: ${it.weight}"
-            binding.randomPokemonImage.load(it.)
+            binding.randomPokemonImage.load(it.sprites.front_default)
         })
         return root
     }
