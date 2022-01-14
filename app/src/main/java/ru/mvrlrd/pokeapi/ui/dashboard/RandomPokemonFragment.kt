@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import coil.api.load
 import ru.mvrlrd.pokeapi.databinding.FragmentRandomBinding
 
 class RandomPokemonFragment : Fragment() {
@@ -34,9 +35,12 @@ class RandomPokemonFragment : Fragment() {
             randomViewModel.getRandomPokemon()
         }
 
-        val textView: TextView = binding.randomNameText
+
         randomViewModel.pokemonName.observe(viewLifecycleOwner, Observer {
-            textView.text = it
+            binding.randomNameText.text = it.name
+            binding.heightText.text = "рост: ${it.height}"
+            binding.weightText.text = "вес: ${it.weight}"
+            binding.randomPokemonImage.load(it.)
         })
         return root
     }
