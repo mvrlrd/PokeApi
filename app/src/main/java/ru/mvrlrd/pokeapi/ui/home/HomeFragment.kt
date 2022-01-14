@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import coil.api.load
 import ru.mvrlrd.pokeapi.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {
@@ -31,13 +32,18 @@ class HomeFragment : Fragment() {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
+
+
         binding.searchActionButton.setOnClickListener {
             homeViewModel.getPokemon(binding.queryText.text.toString())
         }
 
-        val pokemonName: TextView = binding.textHome
+
         homeViewModel.pokemonName.observe(viewLifecycleOwner, Observer {
-            pokemonName.text = it
+            binding.nameText.text = it.name
+            binding.weightText.text ="weight: ${it.weight}"
+            binding.heightText.text ="height: ${it.height}"
+            binding.imageView.load(it.sprites.front_default)
         })
 
         return root
