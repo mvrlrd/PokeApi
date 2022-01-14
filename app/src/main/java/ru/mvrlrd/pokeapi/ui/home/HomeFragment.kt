@@ -42,8 +42,8 @@ class HomeFragment : Fragment() {
 
         homeViewModel.pokemonName.observe(viewLifecycleOwner, Observer {
             binding.nameText.text = it.name
-            binding.weightText.text ="weight: ${it.weight}"
-            binding.heightText.text ="height: ${it.height}"
+            binding.weightText.text ="вес: ${it.weight}"
+            binding.heightText.text ="рост: ${it.height}"
             binding.imageView.load(it.sprites.front_default)
         })
 
