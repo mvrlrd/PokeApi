@@ -1,18 +1,21 @@
 package ru.mvrlrd.pokeapi.ui.home
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import android.view.WindowManager
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import coil.api.load
 import ru.mvrlrd.pokeapi.databinding.FragmentHomeBinding
 
+
+
+
 class HomeFragment : Fragment() {
-
-
     private lateinit var homeViewModel: HomeViewModel
     private var _binding: FragmentHomeBinding? = null
 
@@ -20,6 +23,7 @@ class HomeFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
 
+    @SuppressLint("SetTextI18n")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -33,11 +37,14 @@ class HomeFragment : Fragment() {
 
         binding.searchActionButton.setOnClickListener {
             homeViewModel.getPokemon(binding.queryText.text.toString())
+
         }
 
-        val pokemonName: TextView = binding.textHome
         homeViewModel.pokemonName.observe(viewLifecycleOwner, Observer {
-            pokemonName.text = it
+            binding.nameText.text = it.name
+            binding.weightText.text ="вес: ${it.weight}"
+            binding.heightText.text ="рост: ${it.height}"
+            binding.imageView.load(it.sprites.front_default)
         })
 
         return root
@@ -47,6 +54,8 @@ class HomeFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
+
 
 
 }
