@@ -22,7 +22,7 @@ class HomeViewModel : ViewModel() {
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
-                { value -> _pokemonName.value = value.name }, // onNext
+                { value -> _pokemonName.value = value.sprites.front_default }, // onNext
                 { error -> println("Error: $error") },    // onError
                 { println("Completed!") }
             )
