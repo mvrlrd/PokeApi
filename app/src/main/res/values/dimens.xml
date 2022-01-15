@@ -6,6 +6,6 @@
     <dimen name="card_width">300dp</dimen>
     <dimen name="card_radius">10dp</dimen>
     <dimen name="card_margin_top">30dp</dimen>
-    <dimen name="fab_padding_end">70dp</dimen>
-    <dimen name="fab_padding_bottom">30dp</dimen>
+    <dimen name="fab_margin_end">30dp</dimen>
+    <dimen name="fab_margin_bottom">75dp</dimen>
 </resources>
