@@ -5,23 +5,32 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import coil.api.load
-import kotlinx.android.synthetic.main.fragment_search.view.*
 import ru.mvrlrd.pokeapi.databinding.FragmentSearchBinding
 
 
 
-
+private const val TARGET_FRAGMENT_REQUEST_CODE = 1
 class SearchFragment : Fragment() {
     private lateinit var searchViewModel: SearchViewModel
     private var _binding: FragmentSearchBinding? = null
+    private val searchDialogFragment = SearchDialogFragment()
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setFragmentResultListener("requestKey")
+        {
+                key, bundle ->
+            val query = bundle.getString("queryKey")
+            searchViewModel.getPokemon(query!!)
+        }
+    }
+
     private val binding get() = _binding!!
 
     @SuppressLint("SetTextI18n")
@@ -31,17 +40,16 @@ class SearchFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         searchViewModel =
-            ViewModelProvider(this).get(SearchViewModel::class.java)
+            ViewModelProvider(this)[SearchViewModel::class.java]
 
         _binding = FragmentSearchBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
         binding.searchActionButton.setOnClickListener {
-            searchViewModel.getPokemon(binding.queryText.text.toString())
-
+            parentFragmentManager.let {
+                searchDialogFragment.show(it, "SearchingDialogFragment")
+            }
         }
-
-
 
         searchViewModel.pokemonName.observe(viewLifecycleOwner, Observer {
             binding.nameText.text = it.name
@@ -57,8 +65,4 @@ class SearchFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
-
-
-
-
 }

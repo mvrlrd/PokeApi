@@ -90,27 +90,6 @@
         android:layout_alignParentStart="true"
         >
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:endIconMode="clear_text">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/queryText"
-                android:layout_width="250dp"
-                android:layout_height="50dp"
-                android:layout_marginStart="30dp"
-                android:layout_marginBottom="75dp"
-                android:autofillHints="@string/type_here"
-                android:hint="@string/hint_for_searching_string"
-                android:imeOptions="actionSearch"
-                android:inputType="text"
-                android:layout_alignParentStart="true"/>
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-
-
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/searchActionButton"
             android:layout_width="wrap_content"

@@ -3,6 +3,8 @@
     <string name="title_home">покемонный поиск</string>
     <string name="title_dashboard">рандомный покемон</string>
     <string name="title_notifications">Notifications</string>
-    <string name="hint_for_searching_string">type name or id of pokemon</string>
+    <string name="hint_for_searching_string">type Pokemon\'s name or id</string>
     <string name="type_here">type here</string>
+    <string name="search_by_id_or_name">поиск покемона по id или имени</string>
+    <string name="search">поиск</string>
 </resources>

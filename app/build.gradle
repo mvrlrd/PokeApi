@@ -65,4 +65,6 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxjava:2.2.9'
 
     implementation "io.coil-kt:coil:0.9.5"
+
+    runtimeOnly("androidx.fragment:fragment-ktx:1.4.0")
 }
