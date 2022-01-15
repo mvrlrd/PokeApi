@@ -1,4 +1,4 @@
-package ru.mvrlrd.pokeapi.ui.dashboard
+package ru.mvrlrd.pokeapi.ui.search
 
 import android.annotation.SuppressLint
 import androidx.lifecycle.LiveData
@@ -8,21 +8,21 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import ru.mvrlrd.pokeapi.DaggerDaggerComponent
 import ru.mvrlrd.pokeapi.model.Pokemon
-import kotlin.random.Random
 
-class RandomViewModel : ViewModel() {
+class SearchViewModel : ViewModel() {
     private val apiService = DaggerDaggerComponent.create().retrofitClient().getApiService()
 
-    private val _pokemonName = MutableLiveData<Pokemon>()
-    val pokemonName: LiveData<Pokemon> = _pokemonName
+    private val _pokemon = MutableLiveData<Pokemon>()
+
+    val pokemonName: LiveData<Pokemon> = _pokemon
 
     @SuppressLint("CheckResult")
-    fun getRandomPokemon() {
-        apiService.search(Random.nextInt(1,898).toString())
+     fun getPokemon(id: String) {
+        apiService.search(id)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
-                { value -> _pokemonName.value = value }, // onNext
+                { value -> _pokemon.value = value }, // onNext
                 { error -> println("Error: $error") },    // onError
                 { println("Completed!") }
             )

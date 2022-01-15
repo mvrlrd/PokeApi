@@ -1,4 +1,4 @@
-package ru.mvrlrd.pokeapi.ui.home
+package ru.mvrlrd.pokeapi.ui.search
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -9,14 +9,14 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import coil.api.load
-import ru.mvrlrd.pokeapi.databinding.FragmentHomeBinding
+import ru.mvrlrd.pokeapi.databinding.FragmentSearchBinding
 
 
 
 
-class HomeFragment : Fragment() {
-    private lateinit var homeViewModel: HomeViewModel
-    private var _binding: FragmentHomeBinding? = null
+class SearchFragment : Fragment() {
+    private lateinit var searchViewModel: SearchViewModel
+    private var _binding: FragmentSearchBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -28,18 +28,18 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        homeViewModel =
-            ViewModelProvider(this).get(HomeViewModel::class.java)
+        searchViewModel =
+            ViewModelProvider(this).get(SearchViewModel::class.java)
 
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        _binding = FragmentSearchBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
         binding.searchActionButton.setOnClickListener {
-            homeViewModel.getPokemon(binding.queryText.text.toString())
+            searchViewModel.getPokemon(binding.queryText.text.toString())
 
         }
 
-        homeViewModel.pokemonName.observe(viewLifecycleOwner, Observer {
+        searchViewModel.pokemonName.observe(viewLifecycleOwner, Observer {
             binding.nameText.text = it.name
             binding.pokemonWeightText.text ="вес: ${it.weight}"
             binding.pokemonHeightText.text ="рост: ${it.height}"
