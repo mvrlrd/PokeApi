@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -42,9 +41,9 @@ class HomeFragment : Fragment() {
 
         homeViewModel.pokemonName.observe(viewLifecycleOwner, Observer {
             binding.nameText.text = it.name
-            binding.weightText.text ="вес: ${it.weight}"
-            binding.heightText.text ="рост: ${it.height}"
-            binding.imageView.load(it.sprites.front_default)
+            binding.pokemonWeightText.text ="вес: ${it.weight}"
+            binding.pokemonHeightText.text ="рост: ${it.height}"
+            binding.pokemonImage.load(it.sprites.front_default)
         })
 
         return root
