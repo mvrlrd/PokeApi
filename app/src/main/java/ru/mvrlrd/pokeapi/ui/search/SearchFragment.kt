@@ -13,9 +13,9 @@ import coil.api.load
 import ru.mvrlrd.pokeapi.databinding.FragmentSearchBinding
 
 
+const val REQUEST_KEY = "requestKey"
+const val QUERY_KEY = "queryKey"
 
- const val REQUEST_KEY = "requestKey"
- const val QUERY_KEY = "queryKey"
 class SearchFragment : Fragment() {
     private lateinit var searchViewModel: SearchViewModel
     private var _binding: FragmentSearchBinding? = null
@@ -24,10 +24,10 @@ class SearchFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setFragmentResultListener("requestKey")
+        setFragmentResultListener(REQUEST_KEY)
         {
                 key, bundle ->
-            val query = bundle.getString("queryKey")
+            val query = bundle.getString(QUERY_KEY)
             searchViewModel.getPokemon(query!!)
         }
     }
