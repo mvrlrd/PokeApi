@@ -5,10 +5,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import coil.api.load
+import kotlinx.android.synthetic.main.fragment_search.view.*
 import ru.mvrlrd.pokeapi.databinding.FragmentSearchBinding
 
 
@@ -38,6 +40,8 @@ class SearchFragment : Fragment() {
             searchViewModel.getPokemon(binding.queryText.text.toString())
 
         }
+
+
 
         searchViewModel.pokemonName.observe(viewLifecycleOwner, Observer {
             binding.nameText.text = it.name
