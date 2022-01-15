@@ -14,7 +14,8 @@ import ru.mvrlrd.pokeapi.databinding.FragmentSearchBinding
 
 
 
-private const val TARGET_FRAGMENT_REQUEST_CODE = 1
+ const val REQUEST_KEY = "requestKey"
+ const val QUERY_KEY = "queryKey"
 class SearchFragment : Fragment() {
     private lateinit var searchViewModel: SearchViewModel
     private var _binding: FragmentSearchBinding? = null

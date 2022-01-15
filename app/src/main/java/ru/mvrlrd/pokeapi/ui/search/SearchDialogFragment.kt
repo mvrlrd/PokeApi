@@ -36,14 +36,13 @@ class SearchDialogFragment: BottomSheetDialogFragment() {
                 else -> false
             }
         }
-
         return root
     }
 
     private fun sendQueryText() {
         val query = searchingByIngredients_EditText.text.toString()
         if (query.isNotEmpty()) {
-            setFragmentResult("requestKey", bundleOf("queryKey" to query))
+            setFragmentResult(REQUEST_KEY, bundleOf(QUERY_KEY to query))
         }
     }
 }
