@@ -1,7 +1,8 @@
 <resources>
     <string name="app_name">PokeApi</string>
-    <string name="title_home">покемонный поиск</string>
-    <string name="title_dashboard">рандомный покемон</string>
+    <string name="title_search">покемонный поиск</string>
+    <string name="title_random">рандомный покемон</string>
+    <string name="title_favorites">избранное</string>
     <string name="title_notifications">Notifications</string>
     <string name="hint_for_searching_string">type Pokemon\'s name or id</string>
     <string name="type_here">type here</string>

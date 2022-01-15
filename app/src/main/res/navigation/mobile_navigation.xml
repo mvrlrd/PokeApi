@@ -8,13 +8,19 @@
     <fragment
         android:id="@+id/navigation_search"
         android:name="ru.mvrlrd.pokeapi.ui.search.SearchFragment"
-        android:label="@string/title_home"
+        android:label="@string/title_search"
         tools:layout="@layout/fragment_search" />
 
     <fragment
         android:id="@+id/navigation_random"
         android:name="ru.mvrlrd.pokeapi.ui.random.RandomPokemonFragment"
-        android:label="@string/title_dashboard"
+        android:label="@string/title_random"
         tools:layout="@layout/fragment_random" />
+
+    <fragment
+        android:id="@+id/navigation_favorites"
+        android:name="ru.mvrlrd.pokeapi.ui.favorites.FavoritesFragment"
+        android:label="@string/title_favorites"
+        tools:layout="@layout/fragment_favorites" />
 
 </navigation>
