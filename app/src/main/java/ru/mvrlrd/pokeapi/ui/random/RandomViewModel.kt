@@ -6,25 +6,31 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import ru.mvrlrd.pokeapi.DaggerDaggerComponent
 import ru.mvrlrd.pokeapi.model.Pokemon
+import ru.mvrlrd.pokeapi.model.retrofit.RetrofitClient
+import javax.inject.Inject
+import javax.inject.Singleton
 import kotlin.random.Random
 
-class RandomViewModel : ViewModel() {
-    private val apiService = DaggerDaggerComponent.create().retrofitClient().getApiService()
+const val START_NUMBER = 1
+const val LAST_NUMBER = 898
 
-    private val _pokemonName = MutableLiveData<Pokemon>()
-    val pokemonName: LiveData<Pokemon> = _pokemonName
+@Singleton
+class RandomViewModel @Inject constructor(retrofitClient: RetrofitClient) : ViewModel() {
+    private val apiService = retrofitClient.getApiService()
+    private val _randomPokemon = MutableLiveData<Pokemon>()
+    val randomPokemon: LiveData<Pokemon> = _randomPokemon
 
     @SuppressLint("CheckResult")
     fun getRandomPokemon() {
-        apiService.search(Random.nextInt(1,898).toString())
+        apiService.search(Random.nextInt(START_NUMBER, LAST_NUMBER).toString())
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
-                { value -> _pokemonName.value = value }, // onNext
+                { value -> _randomPokemon.value = value }, // onNext
                 { error -> println("Error: $error") },    // onError
                 { println("Completed!") }
             )
     }
+
 }

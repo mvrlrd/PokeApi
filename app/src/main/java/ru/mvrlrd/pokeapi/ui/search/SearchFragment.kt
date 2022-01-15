@@ -8,27 +8,29 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import coil.api.load
+import ru.mvrlrd.pokeapi.MyApplication
 import ru.mvrlrd.pokeapi.databinding.FragmentSearchBinding
 
 
 const val REQUEST_KEY = "requestKey"
 const val QUERY_KEY = "queryKey"
+const val TAG = "SearchFragment"
 
 class SearchFragment : Fragment() {
-    private lateinit var searchViewModel: SearchViewModel
+    private lateinit  var searchViewModel: SearchViewModel
+
     private var _binding: FragmentSearchBinding? = null
     private val searchDialogFragment = SearchDialogFragment()
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        searchViewModel =
+            (activity?.applicationContext as MyApplication).appComponent.injectSearchVM()
         setFragmentResultListener(REQUEST_KEY)
-        {
-                key, bundle ->
+        { key, bundle ->
             val query = bundle.getString(QUERY_KEY)
-            searchViewModel.getPokemon(query!!)
+            searchViewModel.getPokemonByNameOrId(query!!)
         }
     }
 
@@ -40,8 +42,6 @@ class SearchFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        searchViewModel =
-            ViewModelProvider(this)[SearchViewModel::class.java]
 
         _binding = FragmentSearchBinding.inflate(inflater, container, false)
         val root: View = binding.root
@@ -52,7 +52,7 @@ class SearchFragment : Fragment() {
             }
         }
 
-        searchViewModel.pokemonName.observe(viewLifecycleOwner, Observer {
+        searchViewModel.pokemon.observe(viewLifecycleOwner, Observer {
             binding.nameText.text = it.name
             binding.pokemonWeightText.text ="вес: ${it.weight}"
             binding.pokemonHeightText.text ="рост: ${it.height}"

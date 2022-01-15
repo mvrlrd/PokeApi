@@ -7,8 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import coil.api.load
+import ru.mvrlrd.pokeapi.MyApplication
 import ru.mvrlrd.pokeapi.databinding.FragmentRandomBinding
 
 class RandomPokemonFragment : Fragment() {
@@ -26,8 +26,7 @@ class RandomPokemonFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        randomViewModel =
-            ViewModelProvider(this).get(RandomViewModel::class.java)
+        randomViewModel = (activity?.applicationContext as MyApplication).appComponent.injectRandomVM()
 
         _binding = FragmentRandomBinding.inflate(inflater, container, false)
         val root: View = binding.root
@@ -36,8 +35,7 @@ class RandomPokemonFragment : Fragment() {
             randomViewModel.getRandomPokemon()
         }
 
-
-        randomViewModel.pokemonName.observe(viewLifecycleOwner, Observer {
+        randomViewModel.randomPokemon.observe(viewLifecycleOwner, Observer {
             binding.randomNameText.text = it.name
             binding.heightText.text = "рост: ${it.height}"
             binding.weightText.text = "вес: ${it.weight}"

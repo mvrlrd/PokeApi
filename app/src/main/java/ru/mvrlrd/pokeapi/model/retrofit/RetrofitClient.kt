@@ -4,8 +4,11 @@ import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Inject
+import javax.inject.Singleton
 
 internal const val BASE_URL = "https://pokeapi.co/api/v2/"
+
+@Singleton
 class RetrofitClient @Inject constructor() {
     private val retrofit: Retrofit
     init {
