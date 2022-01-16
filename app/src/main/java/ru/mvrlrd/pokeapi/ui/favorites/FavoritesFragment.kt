@@ -16,12 +16,8 @@ import ru.mvrlrd.pokeapi.domain.models.Pokemon
 class FavoritesFragment : Fragment() {
     private lateinit var favoritesViewModel: FavoritesViewModel
     private var _binding: FragmentFavoritesBinding? = null
-
     private lateinit var favoritesAdapter : FavoritesAdapter
     private lateinit var recyclerView : RecyclerView
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
 
     @SuppressLint("SetTextI18n")
@@ -41,12 +37,10 @@ class FavoritesFragment : Fragment() {
 
         recyclerView = binding.favoritesRecyclerview
         favoritesAdapter = FavoritesAdapter()
-
         favoritesViewModel.favoritePokemons.observe(viewLifecycleOwner, Observer {
             favoritesAdapter.collection = it as MutableList<Pokemon>
         })
         favoritesViewModel.getAllFavoritePokemons()
-
         recyclerView.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = favoritesAdapter

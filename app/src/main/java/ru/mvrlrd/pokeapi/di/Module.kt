@@ -7,15 +7,17 @@ import ru.mvrlrd.pokeapi.MyApplication
 import ru.mvrlrd.pokeapi.data.database.PokemonDao
 import ru.mvrlrd.pokeapi.data.database.PokemonDatabase
 import ru.mvrlrd.pokeapi.data.repository.PokemonRepositoryImpl
+import ru.mvrlrd.pokeapi.data.retrofit.ApiService
 import ru.mvrlrd.pokeapi.data.retrofit.RetrofitClient
 import ru.mvrlrd.pokeapi.domain.repository.PokemonRepository
 import ru.mvrlrd.pokeapi.ui.favorites.FavoritesViewModel
+import ru.mvrlrd.pokeapi.ui.random.RandomViewModel
 import ru.mvrlrd.pokeapi.ui.search.SearchViewModel
 import javax.inject.Singleton
 
 @Module
-class RoomModule(application: MyApplication) {
-     val pokemonDatabase = Room
+class Module(application: MyApplication) {
+     private val pokemonDatabase = Room
         .databaseBuilder(
             application,
             PokemonDatabase::class.java,
@@ -34,19 +36,39 @@ class RoomModule(application: MyApplication) {
     }
     @Singleton
     @Provides
-    fun providePokemonRepository(pokemonDao: PokemonDao): PokemonRepository {
-        return PokemonRepositoryImpl(pokemonDao)
+    fun providePokemonRepository(): PokemonRepository {
+        return PokemonRepositoryImpl(providePokemonDao())
     }
+
+
+
+    @Singleton
+    @Provides
+    fun provideRetrofitClient(): RetrofitClient{
+        return RetrofitClient()
+    }
+    @Singleton
+    @Provides
+    fun provideApiService(): ApiService {
+        return RetrofitClient().getApiService()
+    }
+
+
 
     @Singleton
     @Provides
     fun provideSearchViewModel(): SearchViewModel {
-        return SearchViewModel(RetrofitClient(), PokemonRepositoryImpl(pokemonDatabase.pokemonDao()))
+        return SearchViewModel(provideApiService(), providePokemonRepository())
     }
-
+    @Singleton
+    @Provides
+    fun provideRandomViewModel(): RandomViewModel {
+        return RandomViewModel(provideApiService(), providePokemonRepository())
+    }
     @Singleton
     @Provides
     fun provideFavoritesViewModel(): FavoritesViewModel {
-        return FavoritesViewModel(RetrofitClient(), PokemonRepositoryImpl(pokemonDatabase.pokemonDao()))
+        return FavoritesViewModel(providePokemonRepository())
     }
 }
+

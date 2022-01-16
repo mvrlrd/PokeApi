@@ -15,12 +15,7 @@ class RandomPokemonFragment : Fragment() {
 
     private lateinit var randomViewModel: RandomViewModel
     private var _binding: FragmentRandomBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
-
-
 
     @SuppressLint("SetTextI18n")
     override fun onCreateView(
@@ -30,15 +25,12 @@ class RandomPokemonFragment : Fragment() {
     ): View? {
         randomViewModel =
             (activity?.applicationContext as MyApplication).appComponent.injectRandomVM()
-
         _binding = FragmentRandomBinding.inflate(inflater, container, false)
-
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         binding.randomActionButton.setOnClickListener{
             randomViewModel.getRandomPokemon()
         }

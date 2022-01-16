@@ -66,9 +66,7 @@ class SearchFragment : Fragment() {
             searchViewModel.savePokemon(it)
 
         })
-        searchViewModel.favoritePokemons.observe(viewLifecycleOwner, Observer {
-            println(it)
-        })
+
     }
 
     override fun onDestroyView() {

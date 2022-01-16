@@ -10,8 +10,6 @@ import ru.mvrlrd.pokeapi.R
 import ru.mvrlrd.pokeapi.domain.models.Pokemon
 import kotlin.properties.Delegates
 
-private const val TAG = "FavoritesAdapter"
-
 class FavoritesAdapter: RecyclerView.Adapter<FavoritesAdapter.PokemonCardHolder>() {
 
     internal var collection: MutableList<Pokemon> by
@@ -20,7 +18,6 @@ class FavoritesAdapter: RecyclerView.Adapter<FavoritesAdapter.PokemonCardHolder>
     init {
         setHasStableIds(true)
     }
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PokemonCardHolder {
         val view: View = LayoutInflater.from(parent.context)
@@ -33,8 +30,6 @@ class FavoritesAdapter: RecyclerView.Adapter<FavoritesAdapter.PokemonCardHolder>
     override fun getItemCount() = collection.size
 
     override fun getItemId(position: Int): Long = collection[position].id.toLong()
-
-
 
     override fun onBindViewHolder(holder: PokemonCardHolder, position: Int) {
         val pokemonCard = collection[position]
