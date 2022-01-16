@@ -4,16 +4,10 @@ import android.annotation.SuppressLint
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import kotlinx.coroutines.launch
-import ru.mvrlrd.pokeapi.data.Pokemon
-import ru.mvrlrd.pokeapi.data.repository.PokemonRepositoryImpl
 import ru.mvrlrd.pokeapi.data.retrofit.PokemonApi
 import ru.mvrlrd.pokeapi.data.retrofit.RetrofitClient
-import ru.mvrlrd.pokeapi.domain.repository.PokemonRepository
-import ru.mvrlrd.pokeapi.domain.usecase.SavePokemonUseCase
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlin.random.Random

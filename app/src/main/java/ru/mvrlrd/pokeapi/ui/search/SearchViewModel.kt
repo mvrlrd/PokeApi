@@ -7,13 +7,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.launch
-import ru.mvrlrd.pokeapi.data.Pokemon
-import ru.mvrlrd.pokeapi.data.database.PokemonDao
-import ru.mvrlrd.pokeapi.data.repository.PokemonRepositoryImpl
 import ru.mvrlrd.pokeapi.data.retrofit.PokemonApi
 import ru.mvrlrd.pokeapi.data.retrofit.RetrofitClient
+import ru.mvrlrd.pokeapi.domain.models.Pokemon
 import ru.mvrlrd.pokeapi.domain.repository.PokemonRepository
 import ru.mvrlrd.pokeapi.domain.usecase.GetAllPokemonsUseCase
 import ru.mvrlrd.pokeapi.domain.usecase.SavePokemonUseCase
@@ -23,7 +20,7 @@ import javax.inject.Singleton
 @Singleton
 class SearchViewModel @Inject constructor(
     retrofitClient: RetrofitClient,
-     pokemonRepository: PokemonRepository
+    pokemonRepository: PokemonRepository
 
 ) : ViewModel() {
     private var apiService = retrofitClient.getApiService()
@@ -32,10 +29,8 @@ class SearchViewModel @Inject constructor(
 
     val pokemon: LiveData<PokemonApi> = _pokemon
 
-    private var _mutableLiveDataCats = MutableLiveData<List<Pokemon>>()
-    val catsLive = _mutableLiveDataCats
-
-
+    private var _favoritePokemons = MutableLiveData<List<Pokemon>>()
+    val favoritePokemons = _favoritePokemons
 
     private val savePokemonUseCase : SavePokemonUseCase = SavePokemonUseCase(pokemonRepository)
     private val getAllPokemonsUseCase : GetAllPokemonsUseCase = GetAllPokemonsUseCase(pokemonRepository)
@@ -65,12 +60,10 @@ class SearchViewModel @Inject constructor(
         }
     }
 
-
-     fun getAllCatsFlow() {
+     fun getAllFavoritePokemons() {
         viewModelScope.launch {
-            _mutableLiveDataCats.value = getAllPokemonsUseCase.execute()
+            _favoritePokemons.value = getAllPokemonsUseCase.execute()
         }
-
     }
 
 }

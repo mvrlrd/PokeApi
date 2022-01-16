@@ -10,7 +10,6 @@ import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import coil.api.load
-import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.launch
 import ru.mvrlrd.pokeapi.MyApplication
 import ru.mvrlrd.pokeapi.databinding.FragmentSearchBinding
@@ -65,11 +64,11 @@ class SearchFragment : Fragment() {
             searchViewModel.savePokemon(it)
 /////////////remove
             lifecycleScope.launch {
-                searchViewModel.getAllCatsFlow()
+                searchViewModel.getAllFavoritePokemons()
             }
 
         })
-        searchViewModel.catsLive.observe(viewLifecycleOwner, Observer {
+        searchViewModel.favoritePokemons.observe(viewLifecycleOwner, Observer {
            println(it)
         })
 
