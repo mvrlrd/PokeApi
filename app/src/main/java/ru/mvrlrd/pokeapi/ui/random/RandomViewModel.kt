@@ -1,6 +1,7 @@
 package ru.mvrlrd.pokeapi.ui.random
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -8,10 +9,8 @@ import androidx.lifecycle.viewModelScope
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.launch
-import ru.mvrlrd.pokeapi.data.retrofit.ApiService
-import ru.mvrlrd.pokeapi.data.retrofit.PokemonApi
 import ru.mvrlrd.pokeapi.domain.models.Pokemon
-import ru.mvrlrd.pokeapi.domain.repository.PokemonRepository
+import ru.mvrlrd.pokeapi.domain.usecase.GetPokemonRemotelyUseCase
 import ru.mvrlrd.pokeapi.domain.usecase.SavePokemonUseCase
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -20,20 +19,30 @@ import kotlin.random.Random
 const val START_NUMBER = 1
 const val LAST_NUMBER = 898
 
+const val TAG = "RandomViewModel"
+
 @Singleton
 class RandomViewModel @Inject constructor(
-    private val apiService: ApiService,
-    pokemonRepository: PokemonRepository
+    private val savePokemonUseCase: SavePokemonUseCase,
+    private val getPokemonRemotelyUseCase: GetPokemonRemotelyUseCase
 ) : ViewModel() {
-    private val _randomPokemon = MutableLiveData<PokemonApi>()
-    val randomPokemon: LiveData<PokemonApi> = _randomPokemon
-    private val savePokemonUseCase : SavePokemonUseCase = SavePokemonUseCase(pokemonRepository)
+    private val _randomPokemon = MutableLiveData<Pokemon>()
+    val randomPokemon: LiveData<Pokemon> = _randomPokemon
 
     private fun getRandomPokemonsId() = Random.nextInt(START_NUMBER, LAST_NUMBER)
 
     @SuppressLint("CheckResult")
     fun getRandomPokemon() {
-        apiService.search(getRandomPokemonsId().toString())
+        Log.e(TAG,"$savePokemonUseCase\n$getPokemonRemotelyUseCase")
+        getPokemonRemotelyUseCase.execute(getRandomPokemonsId().toString()).map {
+            Pokemon(
+                it.id,
+                it.name,
+                it.weight,
+                it.height,
+                it.sprites.front_default!!
+            )
+        }
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
@@ -43,16 +52,9 @@ class RandomViewModel @Inject constructor(
             )
     }
 
-    fun savePokemon(pokemon: PokemonApi){
+    fun savePokemon(pokemon: Pokemon) {
         viewModelScope.launch {
-            pokemon.sprites.front_default?.let {
-                Pokemon(pokemon.id,
-                    pokemon.name,
-                    pokemon.weight,
-                    pokemon.height,
-                    it
-                )
-            }?.let { savePokemonUseCase.execute(it) }
+            savePokemonUseCase.execute(pokemon)
         }
     }
 }

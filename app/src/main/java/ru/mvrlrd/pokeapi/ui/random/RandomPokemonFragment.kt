@@ -36,9 +36,9 @@ class RandomPokemonFragment : Fragment() {
         }
         randomViewModel.randomPokemon.observe(viewLifecycleOwner, Observer {
             binding.randomNameText.text = it.name
-            binding.heightText.text = "рост: ${it.height}"
-            binding.weightText.text = "вес: ${it.weight}"
-            binding.randomPokemonImage.load(it.sprites.front_default)
+            binding.heightText.text = it.getHeight()
+            binding.weightText.text = it.getWeight()
+            binding.randomPokemonImage.load(it.url)
         })
     }
 

@@ -10,7 +10,6 @@ import javax.inject.Singleton
 @Singleton
 @Component(modules = [Module::class])
 interface DaggerComponent {
-
     fun injectSearchVM(): SearchViewModel
     fun injectRandomVM(): RandomViewModel
     fun injectFavoritesVM(): FavoritesViewModel
