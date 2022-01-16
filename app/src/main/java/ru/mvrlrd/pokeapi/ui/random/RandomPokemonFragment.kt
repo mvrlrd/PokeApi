@@ -34,6 +34,12 @@ class RandomPokemonFragment : Fragment() {
         binding.randomActionButton.setOnClickListener{
             randomViewModel.getRandomPokemon()
         }
+        binding.addToFavoritesButton.setOnClickListener {
+            randomViewModel.randomPokemon.value?.let{
+                randomViewModel.savePokemon(it)
+            }
+        }
+
         randomViewModel.randomPokemon.observe(viewLifecycleOwner, Observer {
             binding.randomNameText.text = it.name
             binding.heightText.text = it.getHeight()

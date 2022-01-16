@@ -72,6 +72,15 @@
                     android:textSize="18sp"
                     />
 
+                <ImageButton
+                    android:id="@+id/add_toFavorites_Button"
+                    android:layout_width="30dp"
+                    android:layout_height="80dp"
+                    android:layout_marginBottom="20dp"
+                    android:src="@drawable/ic_favorite_border_24px"
+                    android:layout_gravity="bottom|end"
+                    android:layout_marginEnd="@dimen/margin_small"
+                    />
 
 
             </androidx.appcompat.widget.LinearLayoutCompat>

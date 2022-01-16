@@ -47,6 +47,10 @@ class SearchFragment : Fragment() {
                 searchDialogFragment.show(it, "SearchingDialogFragment")
             }
         }
+        binding.addToFavoritesButton.setOnClickListener {
+            searchViewModel.pokemon.value?.let { it1 -> searchViewModel.savePokemon(it1) }
+        }
+
         setFragmentResultListener(REQUEST_KEY)
         { _, bundle ->
             val query = bundle.getString(QUERY_KEY)
@@ -58,10 +62,6 @@ class SearchFragment : Fragment() {
             binding.pokemonWeightText.text = it.getWeight()
             binding.pokemonHeightText.text = it.getHeight()
             binding.pokemonImage.load(it.url)
-
-            //save to favs
-            searchViewModel.savePokemon(it)
-
         })
 
     }
