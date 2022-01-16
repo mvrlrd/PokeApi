@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import ru.mvrlrd.pokeapi.data.Pokemon
+import ru.mvrlrd.pokeapi.data.PokemonModel
 import ru.mvrlrd.pokeapi.data.retrofit.RetrofitClient
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -18,8 +18,8 @@ const val LAST_NUMBER = 898
 @Singleton
 class RandomViewModel @Inject constructor(retrofitClient: RetrofitClient) : ViewModel() {
     private val apiService = retrofitClient.getApiService()
-    private val _randomPokemon = MutableLiveData<Pokemon>()
-    val randomPokemon: LiveData<Pokemon> = _randomPokemon
+    private val _randomPokemon = MutableLiveData<PokemonModel>()
+    val randomPokemon: LiveData<PokemonModel> = _randomPokemon
 
     @SuppressLint("CheckResult")
     fun getRandomPokemon() {
