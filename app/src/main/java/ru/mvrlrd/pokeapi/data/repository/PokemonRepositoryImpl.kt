@@ -1,14 +1,18 @@
 package ru.mvrlrd.pokeapi.data.repository
 
-import ru.mvrlrd.pokeapi.domain.models.Pokemon
+import kotlinx.coroutines.flow.Flow
+import ru.mvrlrd.pokeapi.data.Pokemon
+import ru.mvrlrd.pokeapi.data.database.PokemonDao
 import ru.mvrlrd.pokeapi.domain.repository.PokemonRepository
+import javax.inject.Inject
 
-class PokemonRepositoryImpl: PokemonRepository {
-    override fun savePokemon(pokemon: Pokemon): Int {
-        TODO("Not yet implemented")
+
+class PokemonRepositoryImpl@Inject constructor(private val pokemonDao: PokemonDao): PokemonRepository {
+    override suspend fun savePokemon(pokemon: Pokemon): Long {
+        return pokemonDao.insert(pokemon)
     }
 
-    override fun getAllPokemons(): List<Pokemon> {
-        TODO("Not yet implemented")
+    override suspend fun getAllPokemons(): List<Pokemon> {
+        return pokemonDao.getAllPokemons()
     }
 }

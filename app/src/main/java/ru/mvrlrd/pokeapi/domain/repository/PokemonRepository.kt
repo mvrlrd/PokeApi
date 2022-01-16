@@ -1,8 +1,10 @@
 package ru.mvrlrd.pokeapi.domain.repository
 
-import ru.mvrlrd.pokeapi.domain.models.Pokemon
+import kotlinx.coroutines.flow.Flow
+import ru.mvrlrd.pokeapi.data.Pokemon
+import javax.inject.Inject
 
 interface PokemonRepository {
-    fun savePokemon(pokemon: Pokemon):Int
-    fun getAllPokemons(): List<Pokemon>
+    suspend fun savePokemon(pokemon: Pokemon):Long
+    suspend fun getAllPokemons(): List<Pokemon>
 }

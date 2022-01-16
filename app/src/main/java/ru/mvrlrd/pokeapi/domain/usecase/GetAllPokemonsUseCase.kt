@@ -1,11 +1,12 @@
 package ru.mvrlrd.pokeapi.domain.usecase
 
-import ru.mvrlrd.pokeapi.domain.models.Pokemon
+import kotlinx.coroutines.flow.Flow
+import ru.mvrlrd.pokeapi.data.Pokemon
 import ru.mvrlrd.pokeapi.domain.repository.PokemonRepository
 
 class GetAllPokemonsUseCase(private val pokemonRepository: PokemonRepository) {
 
-    fun execute():List<Pokemon>{
+   suspend fun execute(): List<Pokemon> {
         return pokemonRepository.getAllPokemons()
     }
 }

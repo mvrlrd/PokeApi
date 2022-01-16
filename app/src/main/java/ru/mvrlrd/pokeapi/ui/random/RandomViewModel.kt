@@ -4,10 +4,16 @@ import android.annotation.SuppressLint
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import ru.mvrlrd.pokeapi.data.PokemonModel
+import kotlinx.coroutines.launch
+import ru.mvrlrd.pokeapi.data.Pokemon
+import ru.mvrlrd.pokeapi.data.repository.PokemonRepositoryImpl
+import ru.mvrlrd.pokeapi.data.retrofit.PokemonApi
 import ru.mvrlrd.pokeapi.data.retrofit.RetrofitClient
+import ru.mvrlrd.pokeapi.domain.repository.PokemonRepository
+import ru.mvrlrd.pokeapi.domain.usecase.SavePokemonUseCase
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlin.random.Random
@@ -18,8 +24,11 @@ const val LAST_NUMBER = 898
 @Singleton
 class RandomViewModel @Inject constructor(retrofitClient: RetrofitClient) : ViewModel() {
     private val apiService = retrofitClient.getApiService()
-    private val _randomPokemon = MutableLiveData<PokemonModel>()
-    val randomPokemon: LiveData<PokemonModel> = _randomPokemon
+    private val _randomPokemon = MutableLiveData<PokemonApi>()
+    val randomPokemon: LiveData<PokemonApi> = _randomPokemon
+
+
+
 
     @SuppressLint("CheckResult")
     fun getRandomPokemon() {
@@ -32,5 +41,7 @@ class RandomViewModel @Inject constructor(retrofitClient: RetrofitClient) : View
                 { println("Completed!") }
             )
     }
+
+
 
 }
