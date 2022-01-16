@@ -58,9 +58,9 @@ class SearchFragment : Fragment() {
 
         searchViewModel.pokemon.observe(viewLifecycleOwner, Observer {
             binding.nameText.text = it.name
-            binding.pokemonWeightText.text ="вес: ${it.weight}"
-            binding.pokemonHeightText.text ="рост: ${it.height}"
-            binding.pokemonImage.load(it.sprites.front_default)
+            binding.pokemonWeightText.text = it.getWeight()
+            binding.pokemonHeightText.text = it.getHeight()
+            binding.pokemonImage.load(it.url)
 
             //save to favs
             searchViewModel.savePokemon(it)

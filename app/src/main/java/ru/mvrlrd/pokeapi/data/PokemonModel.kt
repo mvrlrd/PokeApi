@@ -3,7 +3,6 @@ package ru.mvrlrd.pokeapi.data
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import ru.mvrlrd.pokeapi.domain.models.Pokemon
 
 @Entity(tableName = "favorite_pokemons_db")
 data class PokemonModel(

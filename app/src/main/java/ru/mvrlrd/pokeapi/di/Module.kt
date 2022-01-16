@@ -7,9 +7,11 @@ import ru.mvrlrd.pokeapi.MyApplication
 import ru.mvrlrd.pokeapi.data.database.PokemonDao
 import ru.mvrlrd.pokeapi.data.database.PokemonDatabase
 import ru.mvrlrd.pokeapi.data.repository.PokemonRepositoryImpl
+import ru.mvrlrd.pokeapi.data.repository.RemoteDataSourceImpl
 import ru.mvrlrd.pokeapi.data.retrofit.ApiService
 import ru.mvrlrd.pokeapi.data.retrofit.RetrofitClient
 import ru.mvrlrd.pokeapi.domain.repository.PokemonRepository
+import ru.mvrlrd.pokeapi.domain.repository.RemoteDataSource
 import ru.mvrlrd.pokeapi.ui.favorites.FavoritesViewModel
 import ru.mvrlrd.pokeapi.ui.random.RandomViewModel
 import ru.mvrlrd.pokeapi.ui.search.SearchViewModel
@@ -52,13 +54,18 @@ class Module(application: MyApplication) {
     fun provideApiService(): ApiService {
         return RetrofitClient().getApiService()
     }
+    @Singleton
+    @Provides
+    fun provideRemoteRepository(): RemoteDataSource {
+        return RemoteDataSourceImpl(provideApiService())
+    }
 
 
 
     @Singleton
     @Provides
     fun provideSearchViewModel(): SearchViewModel {
-        return SearchViewModel(provideApiService(), providePokemonRepository())
+        return SearchViewModel(provideRemoteRepository(), providePokemonRepository())
     }
     @Singleton
     @Provides
