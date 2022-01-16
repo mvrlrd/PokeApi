@@ -9,6 +9,7 @@ import ru.mvrlrd.pokeapi.data.database.PokemonDatabase
 import ru.mvrlrd.pokeapi.data.repository.PokemonRepositoryImpl
 import ru.mvrlrd.pokeapi.data.retrofit.RetrofitClient
 import ru.mvrlrd.pokeapi.domain.repository.PokemonRepository
+import ru.mvrlrd.pokeapi.ui.favorites.FavoritesViewModel
 import ru.mvrlrd.pokeapi.ui.search.SearchViewModel
 import javax.inject.Singleton
 
@@ -41,5 +42,11 @@ class RoomModule(application: MyApplication) {
     @Provides
     fun provideSearchViewModel(): SearchViewModel {
         return SearchViewModel(RetrofitClient(), PokemonRepositoryImpl(pokemonDatabase.pokemonDao()))
+    }
+
+    @Singleton
+    @Provides
+    fun provideFavoritesViewModel(): FavoritesViewModel {
+        return FavoritesViewModel(RetrofitClient(), PokemonRepositoryImpl(pokemonDatabase.pokemonDao()))
     }
 }

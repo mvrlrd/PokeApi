@@ -65,5 +65,4 @@ class SearchViewModel @Inject constructor(
             _favoritePokemons.value = getAllPokemonsUseCase.execute()
         }
     }
-
 }

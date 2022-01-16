@@ -6,5 +6,13 @@ data class Pokemon(
     val weight: Int,
     val height: Int,
     val url: String
-)
+){
+    fun getWeight() =
+        "вес: $weight"
+
+    fun getHeight() =
+        "рост: $height"
+}
+
+
 

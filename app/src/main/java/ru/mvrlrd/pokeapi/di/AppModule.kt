@@ -31,11 +31,11 @@ class AppModule {
         return RandomViewModel(RetrofitClient())
     }
 
-    @Singleton
-    @Provides
-    fun provideFavoritesViewModel(): FavoritesViewModel{
-        return FavoritesViewModel()
-    }
+//    @Singleton
+//    @Provides
+//    fun provideFavoritesViewModel(): FavoritesViewModel{
+//        return FavoritesViewModel()
+//    }
 
 
 }
