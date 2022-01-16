@@ -29,11 +29,6 @@ class SearchFragment : Fragment() {
         super.onCreate(savedInstanceState)
         searchViewModel =
             (activity?.applicationContext as MyApplication).appComponent.injectSearchVM()
-        setFragmentResultListener(REQUEST_KEY)
-        { key, bundle ->
-            val query = bundle.getString(QUERY_KEY)
-            searchViewModel.getPokemonByNameOrId(query!!)
-        }
     }
 
     private val binding get() = _binding!!
@@ -44,15 +39,21 @@ class SearchFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         _binding = FragmentSearchBinding.inflate(inflater, container, false)
-        val root: View = binding.root
+        return binding.root
+    }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         binding.searchActionButton.setOnClickListener {
             parentFragmentManager.let {
                 searchDialogFragment.show(it, "SearchingDialogFragment")
             }
-
+        }
+        setFragmentResultListener(REQUEST_KEY)
+        { key, bundle ->
+            val query = bundle.getString(QUERY_KEY)
+            searchViewModel.getPokemonByNameOrId(query!!)
         }
 
         searchViewModel.pokemon.observe(viewLifecycleOwner, Observer {
@@ -61,18 +62,13 @@ class SearchFragment : Fragment() {
             binding.pokemonHeightText.text ="рост: ${it.height}"
             binding.pokemonImage.load(it.sprites.front_default)
 
+            //save to favs
             searchViewModel.savePokemon(it)
-/////////////remove
-            lifecycleScope.launch {
-                searchViewModel.getAllFavoritePokemons()
-            }
 
         })
         searchViewModel.favoritePokemons.observe(viewLifecycleOwner, Observer {
-           println(it)
+            println(it)
         })
-
-        return root
     }
 
     override fun onDestroyView() {

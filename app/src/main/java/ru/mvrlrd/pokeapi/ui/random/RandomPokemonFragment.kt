@@ -20,28 +20,34 @@ class RandomPokemonFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
 
+
+
     @SuppressLint("SetTextI18n")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        randomViewModel = (activity?.applicationContext as MyApplication).appComponent.injectRandomVM()
+        randomViewModel =
+            (activity?.applicationContext as MyApplication).appComponent.injectRandomVM()
 
         _binding = FragmentRandomBinding.inflate(inflater, container, false)
-        val root: View = binding.root
+
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         binding.randomActionButton.setOnClickListener{
             randomViewModel.getRandomPokemon()
         }
-
         randomViewModel.randomPokemon.observe(viewLifecycleOwner, Observer {
             binding.randomNameText.text = it.name
             binding.heightText.text = "рост: ${it.height}"
             binding.weightText.text = "вес: ${it.weight}"
             binding.randomPokemonImage.load(it.sprites.front_default)
         })
-        return root
     }
 
     override fun onDestroyView() {

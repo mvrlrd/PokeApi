@@ -32,25 +32,25 @@ class FavoritesFragment : Fragment() {
     ): View? {
         favoritesViewModel =
             (activity?.applicationContext as MyApplication).appComponent.injectFavoritesVM()
-
         _binding = FragmentFavoritesBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        recyclerView = binding.favoritesRecyclerview
+        favoritesAdapter = FavoritesAdapter()
 
         favoritesViewModel.favoritePokemons.observe(viewLifecycleOwner, Observer {
             favoritesAdapter.collection = it as MutableList<Pokemon>
         })
-
         favoritesViewModel.getAllFavoritePokemons()
-
-        favoritesAdapter = FavoritesAdapter()
-
-        recyclerView = binding.favoritesRecyclerview
 
         recyclerView.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = favoritesAdapter
         }
-
-        return binding.root
     }
 
     override fun onDestroyView() {
