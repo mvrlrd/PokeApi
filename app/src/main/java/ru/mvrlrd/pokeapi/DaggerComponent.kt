@@ -1,7 +1,7 @@
 package ru.mvrlrd.pokeapi
 
 import dagger.Component
-import ru.mvrlrd.pokeapi.model.retrofit.RetrofitClient
+import ru.mvrlrd.pokeapi.data.retrofit.RetrofitClient
 import ru.mvrlrd.pokeapi.ui.favorites.FavoritesViewModel
 import ru.mvrlrd.pokeapi.ui.random.RandomViewModel
 import ru.mvrlrd.pokeapi.ui.search.SearchViewModel

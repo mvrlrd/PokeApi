@@ -6,8 +6,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import ru.mvrlrd.pokeapi.model.Pokemon
-import ru.mvrlrd.pokeapi.model.retrofit.RetrofitClient
+import ru.mvrlrd.pokeapi.data.Pokemon
+import ru.mvrlrd.pokeapi.data.retrofit.RetrofitClient
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlin.random.Random
@@ -27,8 +27,8 @@ class RandomViewModel @Inject constructor(retrofitClient: RetrofitClient) : View
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
-                { value -> _randomPokemon.value = value }, // onNext
-                { error -> println("Error: $error") },    // onError
+                { value -> _randomPokemon.value = value },
+                { error -> println("Error: $error") },
                 { println("Completed!") }
             )
     }
